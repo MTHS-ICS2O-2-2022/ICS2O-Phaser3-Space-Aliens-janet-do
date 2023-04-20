@@ -1,8 +1,15 @@
+/* global Phaser */
 // Copyright (c) 2020 Janet Do All rights reserved
 //
 // Created by: Janet Do
 // Created on: Sep 2020
-/* global Phaser */
+
+// scene import statements
+import SplashScene from "./splashScene.js"
+
+// create the new scenes
+const splashScene = new SplashScene()
+
 const config = {
   type: Phaser.AUTO,
   width: 1920,
@@ -21,4 +28,10 @@ const config = {
   },
 }
 const game = new Phaser.Game(config)
-console.log(game)
+
+//load scenes
+// NOTE: remember any 'key' is global an cannot be reused
+game.scene.add("splashScene", splashScene)
+
+// start title
+game.scene.start("splashScene")
