@@ -25,6 +25,13 @@ class SplashScene extends Phaser.Scene {
 
   /**
    * Can be defined on your own Scenes
+   * Use this to load your game assets
+   */
+  preload() {
+    console.log("Splash Scene")
+  }
+  /**
+   * Can be defined on your own Scenes
    * Use it to create your game objects
    * @param {object} data - any data passed via  ScenePlugin.add() or ScenePlugin.start()
    */
