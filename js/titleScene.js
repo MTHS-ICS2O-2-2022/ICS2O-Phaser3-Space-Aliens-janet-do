@@ -3,14 +3,14 @@
 //
 // Created by: Janet Do
 // Created on: Sep 2020
-// This is the splash scene
+// This is the title scene
 
 /**
- * * This class is the splash scene
+ * * This class is the title scene
  */
-class SplashScene extends Phaser.Scene {
+class TitleScene extends Phaser.Scene {
   constructor() {
-    super({ key: "splashScene" })
+    super({ key: "titleScene" })
   }
 
   /**
@@ -28,7 +28,7 @@ class SplashScene extends Phaser.Scene {
    * Use this to load your game assets
    */
   preload() {
-    console.log("Splash Scene")
+    console.log("Title Scene")
   }
   /**
    * Can be defined on your own Scenes
@@ -46,8 +46,8 @@ class SplashScene extends Phaser.Scene {
    * @param {number} delta - the delta time in ms since the last frame
    */
   update(time, delta) {
-    this.scene.switch("titleScene")
+    //pass
   }
 }
 
-export default SplashScene
+export default TitleScene
