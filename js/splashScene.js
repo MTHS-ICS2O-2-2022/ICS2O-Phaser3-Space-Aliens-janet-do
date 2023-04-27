@@ -9,8 +9,12 @@
  * * This class is the splash scene
  */
 class SplashScene extends Phaser.Scene {
+  /**
+   * This is the constructor
+   */
   constructor() {
     super({ key: "splashScene" })
+    
     this.spashSceneBackgroundImage = null
   }
   /**
