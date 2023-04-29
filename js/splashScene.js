@@ -15,7 +15,7 @@ class SplashScene extends Phaser.Scene {
   constructor() {
     super({ key: "splashScene" })
     
-    this.spashSceneBackgroundImage = null
+    this.splashSceneBackgroundImage = null
   }
   /**
    * Can be defined on your own Scenes
@@ -41,7 +41,7 @@ class SplashScene extends Phaser.Scene {
    * @param {object} data - any data passed via  ScenePlugin.add() or ScenePlugin.start()
    */
   create(data) {
-    this.spashSceneBackgroundImage = this.add.sprite(
+    this.splashSceneBackgroundImage = this.add.sprite(
       0,
       0,
       "splashSceneBackground"
