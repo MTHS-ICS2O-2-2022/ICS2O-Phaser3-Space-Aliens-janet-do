@@ -3,19 +3,18 @@
 //
 // Created by: Janet Do
 // Created on: Sep 2020
-// This is the menu scene
+// This is the Game scene
 
 /**
- * This class is the menu scene
+ * * This class is the Game scene
  */
-class MenuScene extends Phaser.Scene {
+class GameScene extends Phaser.Scene {
+  /**
+   * This is the constructor
+   */
   constructor() {
-    super({ key: "menuScene" })
-
-    this.menuSceneBackgroundImage = null
-    this.startButton = null
+    super({ key: "gameScene" })
   }
-
   /**
    * Can be defined on your own Scenes
    * This method is called when the Scene is started by the SceneManager.
@@ -31,28 +30,19 @@ class MenuScene extends Phaser.Scene {
    * Use this to load your game assets
    */
   preload() {
-    console.log("Menu Scene")
-    this.load.image("menuSceneBackground", "./assets/aliens_screen_image2.jpg")
-    this.load.image("startButton", "./assets/start.png")
+    console.log("Game Scene")
   }
-
   /**
    * Can be defined on your own Scenes
    * Use it to create your game objects
    * @param {object} data - any data passed via  ScenePlugin.add() or ScenePlugin.start()
    */
   create(data) {
-    this.menuSceneBackgroundImage = this.add.sprite(0,0, "menuSceneBackground")
-    this.menuSceneBackgroundImage.x = 1920 / 2
-    this.menuSceneBackgroundImage.y = 1080 / 2
-
-    this.startButton = this.add.sprite(1920 / 2, 1080 / 2 + 100, "startButton")
-    this.startButton.setInteractive({useHandCursor: true })
-    this.startButton.on("pointerdown", () => this.clickButton())
+    //pass
   }
 
   /**
-   * Should be overridden by your own Scenes
+   * * Should be ovrridden by your own Scenes
    * This method is called once pr step game while the scene is running
    * @param {number} time - The current time
    * @param {number} delta - the delta time in ms since the last frame
@@ -60,9 +50,6 @@ class MenuScene extends Phaser.Scene {
   update(time, delta) {
     //pass
   }
-    clickButton() {
-   this.scene.start("gameScene")
-}
 }
 
-export default MenuScene
+export default GameScene
