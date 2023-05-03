@@ -3,10 +3,10 @@
 //
 // Created by: Janet Do
 // Created on: Sep 2020
-// This is the title scene
+// This is the menu scene
 
 /**
- * This class is the title scene
+ * This class is the menu scene
  */
 class MenuScene extends Phaser.Scene {
   constructor() {
