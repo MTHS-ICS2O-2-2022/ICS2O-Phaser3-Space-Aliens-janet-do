@@ -6,60 +6,60 @@
 // This is the Game scene
 
 /**
- * * This class is the Game scene
+ * This class is the Game Scene.
  */
 class GameScene extends Phaser.Scene {
   /**
-   * This is the constructor
+   * This method is the constructor.
    */
   constructor() {
     super({ key: "gameScene" })
-
     this.background = null
     this.ship = null
-    this.fireMissle = false
+    this.missilesGroup = null // Added declaration for missilesGroup
+    this.fireMissile = false // Added declaration for fireMissile
   }
+
   /**
-   * Can be defined on your own Scenes
-   * This method is called when the Scene is started by the SceneManager.
-   * before preload() and create()
-   * @param {object} data - any data passed via  ScenePlugin.add() or ScenePlugin.start()
+   * Can be defined on your own Scenes.
+   * This method is called by the Scene Manager when the scene starts,
+   * before preload() and create().
+   * @param {object} data - Any data passed via ScenePlugin.add() or ScenePlugin.start().
    */
   init(data) {
     this.cameras.main.setBackgroundColor("ffffff")
   }
 
   /**
-   * Can be defined on your own Scenes
-   * Use this to load your game assets
+   * Can be defined on your own Scenes.
+   * Use it to load assets.
    */
   preload() {
     console.log("Game Scene")
-
-    this.load.image("starBackground", "./assets/starBackground.png")
-    this.load.image("ship", "./assets/spaceShip.png")
-    this.load.image("missle", "./assets/missle.png")
+    this.load.image("starBackground", "assets/starBackground.png")
+    this.load.image("ship", "assets/spaceShip.png")
+    this.load.image("missile", "assets/missile.png") // Added missile asset
   }
+
   /**
-   * Can be defined on your own Scenes
-   * Use it to create your game objects
-   * @param {object} data - any data passed via  ScenePlugin.add() or ScenePlugin.start()
+   * Can be defined on your own Scenes.
+   * Use it to create your game objects.
+   * @param {object} data - Any data passed via ScenePlugin.add() or ScenePlugin.start().
    */
   create(data) {
-    this.background = this.add.sprite(0, 0, "starBackground").setScale(2.0)
+    this.background = this.add.image(0, 0, "starBackground").setScale(2.0)
     this.background.setOrigin(0, 0)
 
     this.ship = this.physics.add.sprite(1920 / 2, 1080 - 100, "ship")
 
-    //create a group for the missles
-    this.missleGroup = this.physics.add.group()
+    this.missilesGroup = this.physics.add.group() // Moved missilesGroup creation to create() method
   }
 
   /**
-   * * Should be ovrridden by your own Scenes
-   * This method is called once pr step game while the scene is running
-   * @param {number} time - The current time
-   * @param {number} delta - the delta time in ms since the last frame
+   * Should be overridden by your own Scenes.
+   * This method is called once per game step while the scene is running.
+   * @param {number} time - The current time.
+   * @param {number} delta - The delta time in ms since the last frame.
    */
   update(time, delta) {
     const keyLeftObj = this.input.keyboard.addKey("LEFT")
@@ -68,27 +68,25 @@ class GameScene extends Phaser.Scene {
 
     if (keyLeftObj.isDown === true) {
       this.ship.x -= 15
-      if (this.ship.x < 0) {
-        this.ship.x = 0
-      }
+      if (this.ship.x < 0) this.ship.x = 0
     }
+
     if (keyRightObj.isDown === true) {
       this.ship.x += 15
-      if (this.ship.x > 1920) {
-        this.ship = 1920
-      }
+      if (this.ship.x > 1920) this.ship.x = 1920
     }
 
     if (keySpaceObj.isDown === true) {
-      if (this.fireMissle === false)
-        // fire missle
-        this.fireMissle = true
-      const aNewMissle =
-        this / physics.add.sprite(this.ship.x, this.ship.y, "missle")
-      this.missleGroup.add(aNewMissle)
-    }
-    if (keySpaceObj.isUp === true) {
-      this.fireMissle = false
+      if (this.fireMissile === false) {
+        // fire a missile
+        this.fireMissile = true
+        const aNewMissile = this.physics.add.sprite(
+          this.ship.x,
+          this.ship.y,
+          "missile"
+        )
+        this.missilesGroup.add(aNewMissile)
+      }
     }
   }
 }
