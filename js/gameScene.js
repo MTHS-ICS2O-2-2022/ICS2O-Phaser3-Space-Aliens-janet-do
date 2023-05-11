@@ -17,6 +17,7 @@ class GameScene extends Phaser.Scene {
 
     this.background = null
     this.ship = null
+    this.fireMissle = false
   }
   /**
    * Can be defined on your own Scenes
@@ -37,6 +38,7 @@ class GameScene extends Phaser.Scene {
 
     this.load.image("starBackground", "./assets/starBackground.png")
     this.load.image("ship", "./assets/spaceShip.png")
+    this.load.image("missle", "./assets/missle.png")
   }
   /**
    * Can be defined on your own Scenes
@@ -48,6 +50,9 @@ class GameScene extends Phaser.Scene {
     this.background.setOrigin(0, 0)
 
     this.ship = this.physics.add.sprite(1920 / 2, 1080 - 100, "ship")
+
+    //create a group for the missles
+    this.missleGroup = this.physics.add.group()
   }
 
   /**
@@ -59,6 +64,7 @@ class GameScene extends Phaser.Scene {
   update(time, delta) {
     const keyLeftObj = this.input.keyboard.addKey("LEFT")
     const keyRightObj = this.input.keyboard.addKey("RIGHT")
+    const keySpaceObj = this.input.keyboard.addKey("SPACE")
 
     if (keyLeftObj.isDown === true) {
       this.ship.x -= 15
@@ -72,6 +78,19 @@ class GameScene extends Phaser.Scene {
         this.ship = 1920
       }
     }
+
+    if (keySpaceObj.isDown === true) {
+      if (this.fireMissle === false)
+        // fire missle
+        this.fireMissle = true
+      const aNewMissle =
+        this / physics.add.sprite(this.ship.x, this.ship.y, "missle")
+      this.missleGroup.add(aNewMissle)
+    }
+    if (keySpaceObj.isUp === true) {
+      this.fireMissle = false
+    }
   }
 }
+
 export default GameScene
