@@ -1,9 +1,4 @@
 /* global Phaser */
-// Copyright (c) 2020 Janet Do All rights reserved
-//
-// Created by: Janet Do
-// Created on: Sep 2020
-// This is the Game scene
 
 /**
  * This class is the Game Scene.
@@ -16,7 +11,6 @@ class GameScene extends Phaser.Scene {
     super({ key: "gameScene" })
     this.background = null
     this.ship = null
-    this.missilesGroup = null // Added declaration for missilesGroup
     this.fireMissile = false // Added declaration for fireMissile
   }
 
@@ -36,9 +30,13 @@ class GameScene extends Phaser.Scene {
    */
   preload() {
     console.log("Game Scene")
+
+    // images
     this.load.image("starBackground", "assets/starBackground.png")
     this.load.image("ship", "assets/spaceShip.png")
     this.load.image("missile", "assets/missile.png") // Added missile asset
+    // sounds
+    this.load.audio("laser", "assets/laser1.wav")
   }
 
   /**
@@ -52,6 +50,7 @@ class GameScene extends Phaser.Scene {
 
     this.ship = this.physics.add.sprite(1920 / 2, 1080 - 100, "ship")
 
+    // create a group for missiles
     this.missilesGroup = this.physics.add.group() // Moved missilesGroup creation to create() method
   }
 
@@ -62,6 +61,8 @@ class GameScene extends Phaser.Scene {
    * @param {number} delta - The delta time in ms since the last frame.
    */
   update(time, delta) {
+    // called 60 times a second, hopefully!
+
     const keyLeftObj = this.input.keyboard.addKey("LEFT")
     const keyRightObj = this.input.keyboard.addKey("RIGHT")
     const keySpaceObj = this.input.keyboard.addKey("SPACE")
@@ -86,8 +87,20 @@ class GameScene extends Phaser.Scene {
           "missile"
         )
         this.missilesGroup.add(aNewMissile)
+        this.sound.play("laser")
       }
     }
+
+    if (keySpaceObj.isUp === true) {
+      this.fireMissile = false
+    }
+
+    this.missilesGroup.children.each(function (item) {
+      item.y = item.y - 15
+      if (item.y < 0) {
+        item.destroy()
+      }
+    })
   }
 }
 
