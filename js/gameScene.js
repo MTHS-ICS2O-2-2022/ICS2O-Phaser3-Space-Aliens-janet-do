@@ -7,6 +7,16 @@ class GameScene extends Phaser.Scene {
   /**
    * This method is the constructor.
    */
+  //create alien
+  createAlien() {
+    const alienXlocation  = Math.floor(Math.random() * 1920)
+    let alienXVelocity = Math.floor(Math.random() * 50) + 1
+    alienXVelocity *= Math.floor(Math.random()) === 1 ? 1 : -1
+    const anAlien = this.physics.add.sprite(alienXlocation, -100, "alien")
+    anAlien.body.velocity.y = 200
+    anAlien.body.velocity.x = alienXVelocity
+    this.aliensGroup.add(anAlien)
+  }
   constructor() {
     super({ key: "gameScene" })
     this.background = null
@@ -35,6 +45,7 @@ class GameScene extends Phaser.Scene {
     this.load.image("starBackground", "assets/starBackground.png")
     this.load.image("ship", "assets/spaceShip.png")
     this.load.image("missile", "assets/missile.png") // Added missile asset
+    this.load.image("alien", "assets/alien.png") // Added alien asset
     // sounds
     this.load.audio("laser", "assets/laser1.wav")
   }
@@ -52,6 +63,9 @@ class GameScene extends Phaser.Scene {
 
     // create a group for missiles
     this.missilesGroup = this.physics.add.group() // Moved missilesGroup creation to create() method
+
+    this.alienGroup = this.physics.add.group()
+    this.createAlien()
   }
 
   /**
