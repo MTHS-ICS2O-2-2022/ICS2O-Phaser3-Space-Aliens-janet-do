@@ -9,7 +9,7 @@ class GameScene extends Phaser.Scene {
    */
   //create alien
   createAlien() {
-    const alienXlocation  = Math.floor(Math.random() * 1920)
+    const alienXlocation = Math.floor(Math.random() * 1920)
     let alienXVelocity = Math.floor(Math.random() * 50) + 1
     alienXVelocity *= Math.floor(Math.random()) === 1 ? 1 : -1
     const anAlien = this.physics.add.sprite(alienXlocation, -100, "alien")
@@ -48,6 +48,7 @@ class GameScene extends Phaser.Scene {
     this.load.image("alien", "assets/alien.png") // Added alien asset
     // sounds
     this.load.audio("laser", "assets/laser1.wav")
+    this.load.audio("explosion", "assets/explosion1.wav")
   }
 
   /**
@@ -66,8 +67,20 @@ class GameScene extends Phaser.Scene {
 
     this.alienGroup = this.physics.add.group()
     this.createAlien()
-  }
 
+    //Collision detection
+    this.physics.add.collider(
+      this.missilesGroup,
+      this.alienGroup,
+      function (missileCollide, alienCollide) {
+        alienCollide.destroy()
+        missileCollide.destroy()
+        this.sound.play("explosion")
+        this.createAlien()
+        this.createAlien()
+      }.bind(this)
+    )
+  }
   /**
    * Should be overridden by your own Scenes.
    * This method is called once per game step while the scene is running.
