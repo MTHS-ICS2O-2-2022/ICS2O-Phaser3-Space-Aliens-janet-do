@@ -9,7 +9,6 @@ class GameScene extends Phaser.Scene {
    * before preload() and create().
    * @param {object} data - Any data passed via ScenePlugin.add() or ScenePlugin.start().
    */
-
   createAlien() {
     const alienXLocation = Math.floor(Math.random() * 1920) + 1
     let alienXVelocity = Math.floor(Math.random() * 50) + 1
@@ -29,6 +28,11 @@ class GameScene extends Phaser.Scene {
     this.scoreTextStyle = {
       font: "65px Arial",
       fill: "#ffffff",
+      align: "center",
+    }
+    this.gameOverTextStyle = {
+      font: "65px Arial",
+      fill: "#ff0000",
       align: "center",
     }
   }
@@ -52,6 +56,7 @@ class GameScene extends Phaser.Scene {
     // sounds
     this.load.audio("laser", "assets/laser1.wav")
     this.load.audio("explosion", "assets/barrelExploding.wav")
+    this.load.audio("bomb", "assets/bomb.wav")
   }
 
   /**
@@ -90,6 +95,23 @@ class GameScene extends Phaser.Scene {
         this.scoreText.setText("Score: " + this.score.toString())
         this.createAlien()
         this.createAlien()
+      }.bind(this)
+    )
+
+    // Collision between ship and alien
+    this.physics.add.collider(
+      this.ship,
+      this.aliensGroup,
+      function (shipCollide, alienCollide) {
+        this.sound.play("bomb")
+        this.physics.pause()
+        alienCollide.destroy()
+        shipCollide.destroy()
+        this.gameOverText = this.add
+          .text(1920 / 2, 1080 / 2, "GAME OVER", this.gameOverTextStyle)
+          .setOrigin(0.5)
+        this.gameOverText.setInteractive({ useHandCursor: true })
+        this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
       }.bind(this)
     )
   }
